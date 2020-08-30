@@ -1,0 +1,38 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import { useFilterState } from './useFilterState';
+import { FilterableTable } from './useFilterState.stories.tsx';
+import GithubLink from '../../../.storybook/helpers/GithubLink';
+
+<Meta title="Hooks/useFilterState" component={useFilterState} />
+
+# useFilterState
+
+A custom, composeable hook for handling filter state.
+
+```ts
+// Syntax:
+const filterState = useFilterState<T>(args: IFilterStateArgs<T>);
+
+// Arguments:
+interface IFilterStateArgs<T> {
+  items: T[];
+  filterCategories: T[]; // Defaults to []
+}
+
+// Return value:
+interface IFilterState<T> {
+  filteredItems: T[];
+  filterValues: any;
+  setFilterValues: any;
+}
+```
+
+## Examples
+
+### Filterable table
+
+<Canvas>
+  <Story story={FilterableTable} />
+</Canvas>
+
+<GithubLink path="src/hooks/useFilterState/useFilterState.ts" />
