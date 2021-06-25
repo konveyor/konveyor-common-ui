@@ -17,9 +17,9 @@ Documentation and examples (Storybook): http://konveyor.github.io/lib-ui/
 In your app repo, install the library as a normal npm dependency:
 
 ```sh
-yarn add @konveyor/lib-ui
-# or:
 npm install @konveyor/lib-ui
+# or:
+yarn add @konveyor/lib-ui
 ```
 
 ### Install peer dependencies
@@ -32,33 +32,35 @@ When you install @konveyor/lib-ui, you should get a warning from your package ma
 
 ### Optional: Install from local source
 
-If you need to use an unpublished branch (such as when developing an app PR and a lib-ui PR at the same time), you can reference the dependency directly from your local disk by using `yarn link` or `npm link`.
+# TODO: test and fix this after moving to npm
 
-First, clone the lib-ui repo somewhere, `cd` to that clone, install and build the package, and run `yarn link`.
+If you need to use an unpublished branch (such as when developing an app PR and a lib-ui PR at the same time), you can reference the dependency directly from your local disk by using `npm link` or `yarn link`.
+
+First, clone the lib-ui repo somewhere, `cd` to that clone, install and build the package, and run `npm link`. [??? not sure if this still works]
 Unfortunately, you then need to delete `node_modules` in the lib-ui directory so the app's builder doesn't pick it up.
 
 ```sh
 git clone https://github.com/konveyor/lib-ui.git konveyor-lib-ui
 cd konveyor-lib-ui
-yarn install
-yarn build
-yarn link
+npm install
+npm run build
+npm link
 rm -rf node_modules
 ```
 
-Then, `cd` to the app you're developing, and run `yarn link @konveyor/lib-ui` to install the linked version instead of the npm version.
+Then, `cd` to the app you're developing, and run `npm link @konveyor/lib-ui` to install the linked version instead of the npm version.
 
 ```sh
 cd ../virt-ui
-yarn link @konveyor/lib-ui
+npm link @konveyor/lib-ui
 ```
 
 If you make a change in your local lib-ui clone, reinstall its dependencies, rebuild, and remove them. Your app should then pick up the changes.
 
 ```sh
 cd ../konveyor-lib-ui
-yarn install
-yarn build
+npm install
+npm run build
 rm -rf node_modules
 ```
 
@@ -66,11 +68,11 @@ When you're done, in your app repo, unlink the package and force a reinstall of 
 
 ```sh
 cd ../virt-ui
-yarn unlink @konveyor/lib-ui
-yarn install --force
+npm unlink @konveyor/lib-ui
+npm install --force
 ```
 
-Then in the lib-ui directory, run `yarn unlink` if you no longer want it available for linking.
+Then in the lib-ui directory, run `npm unlink` if you no longer want it available for linking.
 
 ### Use it!
 
@@ -87,7 +89,6 @@ import { MyComponent, useSomeHook } from '@konveyor/lib-ui';
 ### Prerequisites
 
 - [NodeJS](https://nodejs.org/en/) >= 10.x
-- [Yarn "Classic"](https://classic.yarnpkg.com/lang/en/) (1.x)
 
 ### Quick-start
 
@@ -96,13 +97,13 @@ Clone and install dependencies:
 ```sh
 git clone https://github.com/konveyor/lib-ui.git konveyor-lib-ui
 cd konveyor-lib-ui
-yarn install
+npm install
 ```
 
 Run the [Storybook](https://storybook.js.org/) dev server (examples and docs) at http://localhost:6006:
 
 ```sh
-yarn storybook
+npm run storybook
 ```
 
 ### Scripts
@@ -111,29 +112,29 @@ To run the type-checker, linter and unit tests:
 
 ```sh
 # Run all 3:
-yarn ci
+npm run ci
 # Or run them individually:
-yarn type-check
-yarn lint [--fix]
-yarn test [--watch]
+npm run type-check
+npm run lint [--fix]
+npm run test [--watch]
 ```
 
 [Prettier](https://prettier.io/) code formatting is enforced by ESLint. To run Prettier and format your code (do this before committing if you don't run Prettier in your editor):
 
 ```sh
-yarn format
+npm run format
 ```
 
 To run a production build using Rollup (outputs to `./dist`):
 
 ```sh
-yarn build
+npm run build
 ```
 
 To export the Storybook docs as a static site (outputs to `./storybook-static`):
 
 ```sh
-yarn storybook:export
+npm run storybook:export
 ```
 
 ## Triggering an npm release
@@ -147,7 +148,7 @@ To assist in formatting commit messages correctly for this purpose, the repo is 
 First, `git add` any changes you want to commit, then:
 
 ```sh
-yarn commit
+npm run git-cz
 ```
 
 Follow the prompts based on the scope of your commit. **Note: This will generate a message for an individual commit, but since we use squash-and-merge, what matters is your PR title.** If your PR contains multiple commits, please make sure the PR title itself matches the expected format. [See our PR template for more details](https://github.com/konveyor/lib-ui/blob/main/.github/pull_request_template.md).

@@ -17,9 +17,9 @@ jobs:
         with:
           node-version: 12
       - name: Install dependencies
-        run: yarn install
+        run: npm install
       - name: Build Storybook
-        run: yarn storybook:export
+        run: npm run storybook:export
       - name: Generate Surge URL
         uses: actions/github-script@v3
         id: surge-url
@@ -36,5 +36,5 @@ jobs:
       - name: Post URL as PR comment
         uses: mshick/add-pr-comment@v1
         with:
-          message: "🚀 Deployed Storybook Preview: http://${{steps.surge-url.outputs.result}} ✨"
+          message: '🚀 Deployed Storybook Preview: http://${{steps.surge-url.outputs.result}} ✨'
           repo-token: ${{ steps.token.outputs.GH_TOKEN }}

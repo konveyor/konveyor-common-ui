@@ -16,16 +16,17 @@
   "license": "Apache-2.0",
   "scripts": {
     "commit": "npx git-cz",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "lint": "eslint --ext .tsx,.js ./src/",
-    "format": "prettier --check --write ./src/**/*.{tsx,ts,scss}",
-    "type-check": "yarn tsc --noEmit",
-    "ci": "yarn type-check && yarn lint && yarn test",
-    "clean": "rimraf dist && rimraf storybook-static",
-    "build": "rimraf dist && rollup -c",
-    "storybook": "start-storybook --docs -p 6006",
-    "storybook:export": "rimraf storybook-static && build-storybook --docs"
+    "test": "$(npm bin)/jest --coverage",
+    "test:watch": "npm run test -- --watch",
+    "lint": "$(npm bin)/eslint --ext .tsx,.ts,.js ./src/",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "$(npm bin)/prettier --check --write ./src/**/*.{tsx,ts,css}",
+    "type-check": "$(npm bin)/tsc --noEmit",
+    "ci": "npm run type-check && npm run lint && npm run test",
+    "clean": "$(npm bin)/rimraf dist && $(npm bin)/rimraf storybook-static",
+    "build": "$(npm bin)/rimraf dist && $(npm bin)/rollup -c",
+    "storybook": "$(npm bin)/start-storybook --docs -p 6006",
+    "storybook:export": "$(npm bin)/rimraf storybook-static && $(npm bin)/build-storybook --docs"
   },
   "peerDependencies": {
     "@patternfly/react-core": "^4.115.1",
