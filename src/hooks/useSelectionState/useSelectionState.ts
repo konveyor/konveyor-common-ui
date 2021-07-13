@@ -5,6 +5,7 @@ export interface ISelectionStateArgs<T> {
   initialSelected?: T[];
   isEqual?: (a: T, b: T) => boolean;
   externalState?: [T[], React.Dispatch<React.SetStateAction<T[]>>];
+  preserveOrder?: boolean;
 }
 
 export interface ISelectionState<T> {
@@ -22,6 +23,7 @@ export const useSelectionState = <T>({
   initialSelected = [],
   isEqual = (a, b) => a === b,
   externalState,
+  preserveOrder = true,
 }: ISelectionStateArgs<T>): ISelectionState<T> => {
   const internalState = React.useState<T[]>(initialSelected);
   const [selectedItems, setSelectedItems] = externalState || internalState;
@@ -50,11 +52,9 @@ export const useSelectionState = <T>({
   const selectAll = (isSelecting = true) => setSelectedItems(isSelecting ? items : []);
   const areAllSelected = selectedItems.length === items.length;
 
-  // Preserve original order of items
-  let selectedItemsInOrder: T[] = [];
-  if (areAllSelected) {
-    selectedItemsInOrder = items;
-  } else if (selectedItems.length > 0) {
+  let selectedItemsInOrder: T[] = selectedItems;
+  if (preserveOrder && !areAllSelected && selectedItems.length > 0) {
+    // Preserve original order of items (slight performance cost: traverses all items on every selection change)
     selectedItemsInOrder = items.filter(isItemSelected);
   }
 

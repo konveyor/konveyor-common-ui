@@ -24,6 +24,7 @@ interface ISelectionStateArgs<T> {
   initialSelected?: T[]; // Defaults to []
   isEqual?: (a: T, b: T) => boolean; // Defaults to (a, b) => a === b
   externalState?: [T[], React.Dispatch<React.SetStateAction<T[]>>];
+  preserveOrder?: boolean; // Defaults to true
 }
 
 // Return value:
@@ -56,6 +57,12 @@ For example, if your items have `id` properties, you can use `isEqual: (a, b) =>
 If necessary, you can pass the optional `externalState` prop in order to manage the actual selections array itself from outside the hook.
 This may be useful if you need to manage the state as part of a centralized form, but you still want the logic from these methods.
 The type of `externalState` is the same as the array returned from `React.useState` (a tuple of `value` and `setValue`.)
+
+## A note about order and performance
+
+By default, the `preserveOrder` option is on. This means that each time the selection is changed, the hook traverses the entire list of
+items so that `selectedItems` is in the same order as the original `items`. With `preserveOrder: false`, `selectedItems` is instead in
+the order the items were selected, but performance is slightly better.
 
 ## Examples
 
